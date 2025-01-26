@@ -15,7 +15,7 @@ export const AppDataSource = new DataSource({
         timezone: "Asia/Seoul",
         dateStrings: true
     },
-    entities: [__dirname + "/src/entities/**/*.js"],
+    entities: [__dirname + "/src/entities/**/*.{js,ts}"],
     subscribers: [],
     migrations: []
 });
