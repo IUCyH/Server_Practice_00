@@ -16,10 +16,12 @@ export default class UserService {
         return null;
     }
 
-    async createUser(user: CreateUserDTO) {
+    async createUser(user: CreateUserDTO): Promise<string> {
         try {
             const userEntity = user.toEntity();
-            await this.repository.createUser(userEntity);
+            const uid = await this.repository.createUser(userEntity);
+
+            return uid;
         } catch(error) {
             throw error;
         }

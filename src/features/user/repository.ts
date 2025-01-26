@@ -12,17 +12,20 @@ export default class UserRepository {
         return result;
     }
 
-    async createUser(user: User): Promise<void> {
+    async createUser(user: User): Promise<string> {
         const builder = AppDataSource.manager.createQueryBuilder(User, "user");
 
         const result = await builder
             .insert()
             .into(User, ["name", "level"])
             .values(user)
+            .returning("uid")
             .execute();
 
         if(result.raw === 0) {
             throw new Error("Failed to create user");
         }
+
+        return result.raw[0].uid;
     }
 }

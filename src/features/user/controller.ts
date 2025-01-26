@@ -33,9 +33,9 @@ export default class UserController {
 
         try {
             const userDTO = new CreateUserDTO(name, level);
-            await this.service.createUser(userDTO);
+            const uid = await this.service.createUser(userDTO);
 
-            res.status(201).json({ message: "User created" });
+            res.status(201).json({ message: "User created", uid: uid });
         } catch(error) {
             console.log(error);
             res.status(500).json({ message: "Internal server error" });
