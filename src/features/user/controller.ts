@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
+import { autoBind } from "../../utils/autoBind";
 import UserService from "./service";
 
 export default class UserController {
     private service: UserService = new UserService();
+
+    constructor() {
+        autoBind(this);
+    }
 
     async getUser(req: Request, res: Response) {
         const uid = req.params.id;
