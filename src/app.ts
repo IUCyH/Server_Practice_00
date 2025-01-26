@@ -5,6 +5,8 @@ import { AppDataSource } from "./configs/orm";
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/users", userRouter);
 
 const port = 8080;
