@@ -5,7 +5,7 @@ export default class UserController {
     private service: UserService = new UserService();
 
     async getUser(req: Request, res: Response) {
-        const uid = req.params.uid;
+        const uid = req.params.id;
         if(!uid) {
             res.status(400).json({ message: "Required parameter not found" });
         }
