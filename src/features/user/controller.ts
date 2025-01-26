@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { autoBind } from "../../utils/autoBind";
 import UserService from "./service";
+import { CreateUserDTO } from "../../dto/createUserDTO";
 
 export default class UserController {
     private service: UserService = new UserService();
@@ -21,5 +22,21 @@ export default class UserController {
         }
 
         res.status(200).json(user);
+    }
+
+    async createUser(req: Request, res: Response) {
+        const { name, level } = req.body;
+        if(!name || !level) {
+            res.status(400).json({ message: "Required parameter not found" });
+            return;
+        }
+
+        try {
+            const userDTO = new CreateUserDTO(name, level);
+            await this.service.createUser(userDTO);
+        } catch(error) {
+            console.log(error);
+            res.status(500).json({ message: "Internal server error" });
+        }
     }
 }

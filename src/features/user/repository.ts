@@ -11,4 +11,18 @@ export default class UserRepository {
             .getOne();
         return result;
     }
+
+    async createUser(user: User): Promise<void> {
+        const builder = AppDataSource.manager.createQueryBuilder(User, "user");
+
+        const result = await builder
+            .insert()
+            .into(User, ["name", "level"])
+            .values(user)
+            .execute();
+
+        if(result.raw === 0) {
+            throw new Error("Failed to create user");
+        }
+    }
 }

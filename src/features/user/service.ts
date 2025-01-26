@@ -1,5 +1,6 @@
 import UserRepository from "./repository";
 import { GetUserDTO } from "../../dto/getUserDTO";
+import { CreateUserDTO } from "../../dto/createUserDTO";
 
 export default class UserService {
     private repository: UserRepository = new UserRepository();
@@ -13,5 +14,14 @@ export default class UserService {
         }
 
         return null;
+    }
+
+    async createUser(user: CreateUserDTO) {
+        try {
+            const userEntity = user.toEntity();
+            await this.repository.createUser(userEntity);
+        } catch(error) {
+            throw error;
+        }
     }
 }
