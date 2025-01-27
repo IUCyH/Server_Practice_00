@@ -1,13 +1,15 @@
 import { AppDataSource } from "../../configs/orm";
 import { User } from "../../entities/user/user";
+import { UserRepositoryBase } from "../../featureBases/user/repository";
+import { uid } from "../../types/user/repository";
 
-export default class UserRepository {
-    async getUser(uid: string): Promise<User | null> {
+export default class UserRepository extends UserRepositoryBase {
+    async getUser(param: uid): Promise<User | null> {
         const builder = AppDataSource.manager.createQueryBuilder(User, "user");
         const result = await builder
             .addSelect("user.uid, user.name, user.level")
             .leftJoinAndSelect("user.links", "links")
-            .where("user.uid = :uid", { uid: uid })
+            .where("user.uid = :uid", { uid: param.uid })
             .getOne();
         return result;
     }

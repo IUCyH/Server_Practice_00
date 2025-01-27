@@ -4,9 +4,10 @@ import UserService from "./service";
 import { CreateUserDTO } from "../../dto/createUserDTO";
 
 export default class UserController {
-    private service: UserService = new UserService();
+    private service: UserService;
 
-    constructor() {
+    constructor(service: UserService) {
+        this.service = service;
         autoBind(this);
     }
 
