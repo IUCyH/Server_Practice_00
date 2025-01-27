@@ -1,20 +1,18 @@
-import UserRepository from "./repository";
 import { GetUserDTO } from "../../dto/getUserDTO";
 import { CreateUserDTO } from "../../dto/createUserDTO";
 import { UserRepositoryParams } from "../../types/user/repository";
 import { UserRepositoryBase } from "../../featureBases/user/repository";
 
 export default class UserService {
-    private repository: UserRepository = new UserRepository();
-    private repositoryBase: UserRepositoryBase;
+    private repository: UserRepositoryBase;
 
     constructor(repositoryBase: UserRepositoryBase) {
-        this.repositoryBase = repositoryBase;
+        this.repository = repositoryBase;
     }
 
     async getUser(uid: string) {
         const param: UserRepositoryParams = { uid: { uid: uid } };
-        const user = await this.repositoryBase.get(param);
+        const user = await this.repository.get(param);
 
         if(user != null) {
             const result = GetUserDTO.fromEntity(user);
@@ -27,7 +25,7 @@ export default class UserService {
     async createUser(user: CreateUserDTO): Promise<string> {
         try {
             const userEntity = user.toEntity();
-            const uid = await this.repository.createUser(userEntity);
+            const uid = await this.repository.create(userEntity);
 
             return uid;
         } catch(error) {

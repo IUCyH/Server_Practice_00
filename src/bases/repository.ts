@@ -9,6 +9,7 @@ export type RepositoryParams = {
     [Features.User]: UserRepositoryParams;
 };
 
-export interface Repository<T extends keyof (typeof Features)> {
+export interface Repository<E, T extends keyof (typeof Features)> {
     get(param: RepositoryParams[T]): Promise<null | ObjectLiteral>;
+    create(entity: E): Promise<any>;
 }
